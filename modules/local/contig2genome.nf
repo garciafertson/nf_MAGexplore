@@ -1,0 +1,3 @@
+process CONTIG2GENOME {
+  
+}
