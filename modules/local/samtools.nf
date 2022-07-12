@@ -3,7 +3,7 @@ process SAM2BAM{
   publishDir "prepare/bam"
   cpus 2
   time 2.h
-  container "biocontainers/samtools:v1.9-4-deb_cv1"
+  container "biocontainers/samtools:v1.7.0_cv4"
 
   input:
   tuple val(x), path(sam)

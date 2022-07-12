@@ -1,6 +1,6 @@
 process BEDTOOLS_COVERAGE{
   //scratch=true
-  container "biocontainers/bedtools:v2.27.1dfsg-4-deb_cv1"
+  container "pegi3s/bedtools:2.29.2"
   publishDir "output"
   cpus 1
   time "3h"

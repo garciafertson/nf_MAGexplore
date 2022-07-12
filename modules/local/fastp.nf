@@ -2,7 +2,7 @@ process FASTP{
   //scratch true
   cpus '2'
   time '5h'
-  container "biocontainers/fastp:v0.19.6dfsg-1-deb_cv1"
+  container "bromberglab/fastp:latest"
   //module 'bioinfo-tools:fastp'
 
   input:
