@@ -3,7 +3,7 @@ process BOWTIE2INDEX{
   publishDir "prepare/bowtieindex",
     mode: "copy"
   //conda "bioconda::bowtie2"
-  container "biocontainers/bowtie2:v2.3.4.3-1-deb_cv2"
+  container "biocontainers/bowtie2:v2.4.1_cv1"
   cpus params.bowtiecores
   time 6.h
 
@@ -22,7 +22,7 @@ process BOWTIE2{
   //scratch true
   cpus params.bowtiecores
   time 6.h
-  container "biocontainers/bowtie2:v2.3.4.3-1-deb_cv2"
+  container "biocontainers/bowtie2:v2.4.1_cv1"
   //module "bioinfo-tools:bowtie2", "samtools"
   //conda "bioconda::bowtie2"
 
