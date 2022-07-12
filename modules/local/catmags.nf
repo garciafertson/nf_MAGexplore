@@ -1,5 +1,5 @@
 process CATMAGS{
-  scratch true
+  //scratch true
   cpus '1'
   time '1h'
   publishDir "prepare", mode: 'copy'
@@ -13,7 +13,8 @@ process CATMAGS{
     path(params.contigs_genomebed), emit:genomebed
   script:
   """
-  concat_mags.py --mags_folder $launchDir/$params.mags_folder \\
+  head -1 $mags_folder/*
+  concat_mags.py --mags_folder ./$mags_folder \\
                     --out_contigs $params.contigs_file \\
                     --out_genomebed $params.contigs_genomebed
   sort -k1,1V $params.contigs_genomebed > tmp

@@ -22,17 +22,20 @@ def main():
     print("Running concat MAGs into one file and append MAG name")
     with open(args.out_contigs, "w") as out, open(args.out_genomebed, "w")as gnm:
         #find fasta files in folder
-        for filename in glob.glob(os.path.join(args.mags_folder,'*.fa')):
-            with open(os.path.join(os.getcwd(), filename), 'r') as f:
-                for record in SeqIO.parse(f,"fasta"):
-                    #prefix filename in fasta header
-                    name=Path(filename).stem
-                    record.id="|".join([name, record.id])
-                    record.id=record.id.replace(" ","_")
-                    #print sequnce in output
-                    if len(record.seq) > 2500 : #if record.seq.find("N") == -1:
-                        out.write(">%s\n%s\n" %(record.id, record.seq))
-                        gnm.write("%s\t%s\n" %(record.id, len(record.seq)))
+        fileext=["*.fa", "*.fna", "*.fasta", "*.fas"]
+        for ext in fileext:
+            for filename in glob.glob(os.path.join(args.mags_folder,ext)):
+                with open(os.path.join(os.getcwd(), filename), 'r') as f:
+                    for record in SeqIO.parse(f,"fasta"):
+                        #prefix filename in fasta header
+                        name=Path(filename).stem
+                        record.id="|".join([name, record.id])
+                        record.id=record.id.replace(" ","_")
+                        record.id=(record.id[:100] + '..') if len(record.id) > 100 else record.id
+                        #print sequnce in output
+                        if len(record.seq) > 2500 : #if record.seq.find("N") == -1:
+                            out.write(">%s\n%s\n" %(record.id, record.seq))
+                            gnm.write("%s\t%s\n" %(record.id, len(record.seq)))
 
 if __name__ == "__main__":
     main()
