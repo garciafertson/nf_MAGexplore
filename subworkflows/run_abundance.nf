@@ -1,18 +1,24 @@
 include {FASTP}  from "../modules/local/fastp"
 include {BOWTIE2}  from "../modules/local/bowtie2"
 include {SAM2BAM}  from "../modules/local/samtools"
-include {METAPOP}  from "../modules/local/metapop"
+//include {METAPOP}  from "../modules/local/metapop"
 include {BEDTOOLS_COVERAGE} from "../modules/local/bedtools"
 include {COVERAGE_METRICS}  from "../modules/local/coverage"
 include {COV_MATRIX}        from "../modules/local/coverage"
+//coverage for checkm marker genes
+include {BEDTOOLS_COVERAGE as BEDCOV_MARKER}     from "../modules/local/bedtools"
+include {COVERAGE_METRICS as COVERAGE_METRICS_MARKER}   from "../modules/local/coverage"
+include {COV_MATRIX as COV_MATRIX_MARKER}               from "../modules/local/coverage"
+
 //include {READCOUNT} from "../modules/local/read_count"
 //include {CONTIG2GENOME}  from "../modules/local/contig2genome"
 
-workflow RUN_METAPOP{
+workflow RUN_ABUNDANCE{
   take:
     bowtie_index
     genesbed
     genomebed
+    markerbed
   main:
     //bedref=genesbed.mix(genomebed)
     //bedref=bedref.toList()
@@ -51,21 +57,32 @@ workflow RUN_METAPOP{
 
     bed_input= sortbam.combine(genesbed)
     bed_input=bed_input.combine(genomebed)
-    bed_input.view()
-
-    BEDTOOLS_COVERAGE(sortbam)
+    //bed_input.view()
+    BEDTOOLS_COVERAGE(bedinput)
     bedcov=BEDTOOLS_COVERAGE.out.bedcov
     bedcov.view()
 
+    markerbed_input= sortbam.combine(markerbed)
+    markerbed_input=markerbed_input.combine(genomebed)
+    BEDCOV_MARKER{markerbed_input}
+    bedcov_marker=BEDCOV_MARKER_CHECKM.out.bedcov
+
     gp=Channel.value(0.5)
     bp=Channel.value(0.3)
+
     cov_cutoff=gp.combine(bp)
     cov_input=bedcov.combine(cov_cutoff)
     COVERAGE_METRICS(cov_input)
     sample_cov=COVERAGE_METRICS.out.csv
 
+    cov_input_marker=bedcov_marker.combine(cov_cutoff)
+    COVERAGE_METRICS_MARKER(cov_input_marker)
+    sample_cov_marker=COVERAGE_METRICS_MARKER.out.csv
+
     all_samplescov= sample_cov.collectFile(name:"abundance_dataframe.csv")
+    all_samplescov_marker= sample_cov_marker.collectFile(name:"abundance_dataframe_marker.csv")
     COV_MATRIX(all_samplescov)
+    COV_MATRIX_MARKER(all_samplescov_marker)
 
     //COV_MAGS(contigs_cov_mat)
 

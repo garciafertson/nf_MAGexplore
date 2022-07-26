@@ -3,6 +3,8 @@ include {BOWTIE2INDEX}  from "../modules/local/bowtie2"
 include {PRODIGAL}      from "../modules/local/prodigal"
 include {GFF2BED}       from "../modules/local/bedops"
 include {GENOMEBED}     from "../modules/local/bedops"
+include {CHECKM_MARKER}        from "../modules/local/checkm"
+include {FASHEAD2BED}   from "../modules/local/checkm"
 
 workflow PREPARE{
 
@@ -10,6 +12,11 @@ workflow PREPARE{
     mags_folder
   main:
   //Define chanel fasta files with MAGS from the skin
+    CHECKM_MARKER(mags_folder)
+    fnaname_markers=CHECKM_MARKER.out.marker
+    FASHEAD2BED(fnaname_markers)
+    marker=FASHEAD2BED.out.markerbed
+
     CATMAGS(mags_folder)
     concat_mags=CATMAGS.out.contigs
     //genomebed=CATMAGS.out.genomebed
@@ -20,12 +27,13 @@ workflow PREPARE{
 
     GFF2BED(gff)
     genesbed=GFF2BED.out.genesbed
-    //GENOMEBED(genesbed)
+    GENOMEBED(genesbed)
 
   emit:
     bowtie2index=BOWTIE2INDEX.out.index
-    contigs=CATMAGS.out.contigs
-    genomebed=CATMAGS.out.genomebed
-    genes=PRODIGAL.out.genes
+    //contigs=CATMAGS.out.contigs
     genesbed=GFF2BED.out.genesbed
+    genomebed=CATMAGS.out.genomebed
+    //genes=PRODIGAL.out.genes
+    markerbed=FASHEAD2BED.out.markerbed
 }

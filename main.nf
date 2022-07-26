@@ -1,11 +1,11 @@
 nextflow.enable.dsl = 2
 
-include {METAPOP_MACRODIVERSITY} from  "./workflows/metapop_macrodiversity"
+include {MAG_ABUNDANCE} from  "./workflows/macrodiversity"
 
-workflow NF_METAPOP_MACRODIVERSITY{
-	METAPOP_MACRODIVERSITY()
+workflow NF_MAGex{
+	MAG_ABUNDANCE()
 	}
 
 workflow{
-	NF_METAPOP_MACRODIVERSITY()
+	NF_MAGex()
 	}

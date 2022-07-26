@@ -1,18 +1,20 @@
 //Import subworkflows
 include { PREPARE } from  "../subworkflows/prepare"
-include { RUN_METAPOP }      from "../subworkflows/run_metapop"
+include { RUN_ABUNDANCE }      from "../subworkflows/run_abundance"
 
-workflow METAPOP_MACRODIVERSITY{
+workflow MAG_ABUNDANCE{
   if (params.build_bowtie2index){
     Channel
       .fromPath(params.mags_folder, type: 'dir')
       .set {mags_folder}
     PREPARE(mags_folder)
     //Rertun database path in params variable and run METAPOP
-    contigs=PREPARE.out.contigs
-    bowtie2index=PREPARE.out.bowtie2index
-  }else if(params.run_metapop){
+    bowtie_index=PREPARE.out.bowtie2index
+    genesbed=PREPARE.out.genesbed
+    genomebed=PREPARE.out.genomebed
+    markerbed=PREPARE.out.markerbed
 
+  }else if(params.run_metapop){
     Channel
       .fromPath(["prepare/bowtieindex/mags_bowtieindex*"])
       .toList()
@@ -23,8 +25,10 @@ workflow METAPOP_MACRODIVERSITY{
     Channel
       .fromPath("prepare/contigs.genome.bed")
       .set{genomebed}
+    Channel
+      .fromPath("prepare/marker.bed")
+      .set{markerbed}
 
-    RUN_METAPOP(bowtie_index,genesbed,genomebed)
-
+    RUN_ABUNDANCE(bowtie_index,genesbed,genomebed, markerbed)
   }
 }
