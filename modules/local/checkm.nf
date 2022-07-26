@@ -1,6 +1,6 @@
 process CHECKM_MARKER{
 //directives
-container "nanozoo/checkm:1.1.3--c79a047"
+container "c00cjz00/checkm:v1.1.18"
 publishDir "prepare"
 cpus params.maxcores
 time "6h"
@@ -14,6 +14,12 @@ path("mag_markerDomain.txt"), emit:marker
 
 script:
 """
+mkdir checkmdata
+cd checkmdata
+wget https://data.ace.uq.edu.au/public/CheckM_databases/checkm_data_2015_01_16.tar.gz 2> /dev/null 
+tar -xzvf checkm_data_2015_01_16.tar.gz
+cd ..
+export CHECKM_DATA_PATH=\$PWD/checkmdata
 checkm tree -x fa -t ${task.cpus} ${input_folder} tree
 checkm lineage_set --force_domain tree marker_Domain
 checkm analyze -x fa -t ${task.cpus} marker_Domain ${input_folder} analyze_Domain
