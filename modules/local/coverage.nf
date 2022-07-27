@@ -17,6 +17,26 @@ process COVERAGE_METRICS {
     """
 }
 
+process COVERAGE_METRICS_MARKER{
+
+  container "biopython/biopython:latest"
+  publishDir "output"
+  cpus 1
+  time '2h'
+
+  input:
+    tuple val(x), path(bedcov), val(gp), val(bp)
+  output:
+    path("marker_coverage_stats.csv") , emit: csv
+  script:
+    """
+    coverage_metrics_marker.py \\
+    --gp_fraction $gp \\
+    --bp_fraction $bp \\
+    --bedcoverage $bedcov --sample ${x.id}
+    """
+}
+
 process COV_MATRIX {
     container "biopython/biopython:latest"
     publishDir "output",

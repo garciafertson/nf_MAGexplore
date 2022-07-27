@@ -14,15 +14,15 @@ def main():
     parser.add_argument("--coverage_stats", required=True, metavar='FILE')
     args=parser.parse_args()
 
-    df=pd.read_csv(args.coverage_stats, names=["bgc_id","sample","len","glen","avcov","basecov","reads","rpk","presence","rpm","rpkm","tpm"])
-    table=pd.pivot_table(df, values = "presence", index=["bgc_id"], columns=['sample'])
+    df=pd.read_csv(args.coverage_stats, names=["id","sample","len","glen","avcov","basecov","reads","rpk","presence","rpm","rpkm","tpm"])
+    table=pd.pivot_table(df, values = "presence", index=["id"], columns=['sample'])
     table.to_csv(args.coverage_stats+".Presence_table.csv", index=True, header=True)
-    table=pd.pivot_table(df, values = "rpkm", index=["bgc_id"], columns=['sample'])
+    table=pd.pivot_table(df, values = "rpkm", index=["id"], columns=['sample'])
     table.to_csv(args.coverage_stats+".RPKM_table.csv", index=True, header=True)
-    table=pd.pivot_table(df, values = "tpm", index=["bgc_id"], columns=['sample'])
+    table=pd.pivot_table(df, values = "tpm", index=["id"], columns=['sample'])
     table.to_csv(args.coverage_stats+".TPM_table.csv", index=True, header=True)
-    table=pd.pivot_table(df, values = "avcov", index=["bgc_id"], columns=['sample'])
-    table.to_csv(args.coverage_stats+"Coverage_table.csv", index=True, header=True)
+    table=pd.pivot_table(df, values = "avcov", index=["id"], columns=['sample'])
+    table.to_csv(args.coverage_stats+".Coverage_table.csv", index=True, header=True)
 
     #add BGC annotation from file key BGCid, value predicted, consider multiple types
     #pandas crosstab read bgc type annotation file

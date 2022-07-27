@@ -7,7 +7,7 @@ include {COVERAGE_METRICS}  from "../modules/local/coverage"
 include {COV_MATRIX}        from "../modules/local/coverage"
 //coverage for checkm marker genes
 include {BEDTOOLS_COVERAGE as BEDCOV_MARKER}     from "../modules/local/bedtools"
-include {COVERAGE_METRICS as COVERAGE_METRICS_MARKER}   from "../modules/local/coverage"
+include {COVERAGE_METRICS_MARKER}   from "../modules/local/coverage"
 include {COV_MATRIX as COV_MATRIX_MARKER}               from "../modules/local/coverage"
 
 //include {READCOUNT} from "../modules/local/read_count"
@@ -79,8 +79,8 @@ workflow RUN_ABUNDANCE{
     COVERAGE_METRICS_MARKER(cov_input_marker)
     sample_cov_marker=COVERAGE_METRICS_MARKER.out.csv
 
-    all_samplescov= sample_cov.collectFile(name:"abundance_dataframe.csv")
-    all_samplescov_marker= sample_cov_marker.collectFile(name:"abundance_dataframe_marker.csv")
+    all_samplescov= sample_cov.collectFile(name:"all_contigs")
+    all_samplescov_marker= sample_cov_marker.collectFile(name:"singlecopy_marker")
     COV_MATRIX(all_samplescov)
     COV_MATRIX_MARKER(all_samplescov_marker)
 
