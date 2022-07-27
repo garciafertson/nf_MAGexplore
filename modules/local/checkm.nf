@@ -41,6 +41,6 @@ process FASHEAD2BED{
   script:
   """
   fastaheader2bed.py --fastaheaders ${markers} --output tmp.bed
-  sort -k1,1V -k2,2n -k3,3n tmp.bd > marker.bed
+  sort -k1,1V -k2,2n -k3,3n tmp.bed > marker.bed
   """
 }
