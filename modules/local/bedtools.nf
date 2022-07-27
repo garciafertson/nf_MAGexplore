@@ -6,9 +6,7 @@ process BEDTOOLS_COVERAGE{
   time "3h"
 
   input:
-    tuple val(x), path(bam)
-    path(genesbed)
-    path(genomebed)
+    tuple val(x), path(bam), path(genesbed), path(genomebed)
 
     //contig_bed file contains the gene annotatiosn from the contig.fasta file
     //genome bed contains the file with expected chromosome order

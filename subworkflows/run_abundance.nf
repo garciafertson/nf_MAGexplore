@@ -58,14 +58,14 @@ workflow RUN_ABUNDANCE{
     bed_input= sortbam.combine(genesbed)
     bed_input=bed_input.combine(genomebed)
     //bed_input.view()
-    BEDTOOLS_COVERAGE(bedinput)
+    BEDTOOLS_COVERAGE(bed_input)
     bedcov=BEDTOOLS_COVERAGE.out.bedcov
     bedcov.view()
 
     markerbed_input= sortbam.combine(markerbed)
     markerbed_input=markerbed_input.combine(genomebed)
     BEDCOV_MARKER{markerbed_input}
-    bedcov_marker=BEDCOV_MARKER_CHECKM.out.bedcov
+    bedcov_marker=BEDCOV_MARKER.out.bedcov
 
     gp=Channel.value(0.5)
     bp=Channel.value(0.3)

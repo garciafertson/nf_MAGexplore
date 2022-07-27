@@ -14,7 +14,7 @@ workflow MAG_ABUNDANCE{
     genomebed=PREPARE.out.genomebed
     markerbed=PREPARE.out.markerbed
 
-  }else if(params.run_metapop){
+  }else if(params.run_mag_abundance){
     Channel
       .fromPath(["prepare/bowtieindex/mags_bowtieindex*"])
       .toList()

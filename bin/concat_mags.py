@@ -33,9 +33,9 @@ def main():
                         record.id=record.id.replace(" ","_")
                         record.id=(record.id[:100] + '..') if len(record.id) > 100 else record.id
                         #print sequnce in output
-                        if len(record.seq) > 2500 : #if record.seq.find("N") == -1:
-                            out.write(">%s\n%s\n" %(record.id, record.seq))
-                            gnm.write("%s\t%s\n" %(record.id, len(record.seq)))
+                        gnm.write("%s\t%s\n" %(record.id, len(record.seq)))
+                        #if len(record.seq) > 2000 : #if record.seq.find("N") == -1:
+                        out.write(">%s\n%s\n" %(record.id, record.seq))
 
 if __name__ == "__main__":
     main()
