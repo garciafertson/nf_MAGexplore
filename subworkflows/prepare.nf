@@ -2,7 +2,6 @@ include {CATMAGS}       from "../modules/local/catmags"
 include {BOWTIE2INDEX}  from "../modules/local/bowtie2"
 include {PRODIGAL}      from "../modules/local/prodigal"
 include {GFF2BED}       from "../modules/local/bedops"
-include {GENOMEBED}     from "../modules/local/bedops"
 include {CHECKM_MARKER}        from "../modules/local/checkm"
 include {FASHEAD2BED}   from "../modules/local/checkm"
 
@@ -27,7 +26,6 @@ workflow PREPARE{
 
     GFF2BED(gff)
     genesbed=GFF2BED.out.genesbed
-    GENOMEBED(genesbed)
 
   emit:
     bowtie2index=BOWTIE2INDEX.out.index
