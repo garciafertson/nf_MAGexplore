@@ -14,7 +14,7 @@ workflow MAG_ABUNDANCE{
     bowtie_index=PREPARE.out.bowtie2index
     genesbed=PREPARE.out.genesbed
     genomebed=PREPARE.out.genomebed
-    markerbed=PREPARE.out.markerbed
+    //markerbed=PREPARE.out.markerbed
 
   }else if(params.run_bact_abundance){
     Channel

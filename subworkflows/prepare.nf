@@ -14,9 +14,10 @@ workflow PREPARE{
     if (!params.no_bacterial_mag){
       CHECKM_MARKER(mags_folder)
       fnaname_markers=CHECKM_MARKER.out.marker
-    }
+
     FASHEAD2BED(fnaname_markers)
     marker=FASHEAD2BED.out.markerbed
+    }
 
     CATMAGS(mags_folder)
     concat_mags=CATMAGS.out.contigs
@@ -35,5 +36,5 @@ workflow PREPARE{
     genesbed=GFF2BED.out.genesbed
     genomebed=CATMAGS.out.genomebed
     //genes=PRODIGAL.out.genes
-    markerbed=FASHEAD2BED.out.markerbed
+    markerbed=FASHEAD2BED.out.markerbed, optional:true
 }
