@@ -44,4 +44,5 @@ workflow MAG_ABUNDANCE{
       .fromPath("prepare/contigs.genome.bed")
       .set{genomebed}
     RUN_ABUNDANCE_MAG(bowtie_index,genesbed,genomebed)
+  }
 }
