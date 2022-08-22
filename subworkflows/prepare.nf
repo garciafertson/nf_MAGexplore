@@ -36,5 +36,5 @@ workflow PREPARE{
     genesbed=GFF2BED.out.genesbed
     genomebed=CATMAGS.out.genomebed
     //genes=PRODIGAL.out.genes
-    markerbed=FASHEAD2BED.out.markerbed, optional:true
+    //markerbed=FASHEAD2BED.out.markerbed, optional:true
 }
