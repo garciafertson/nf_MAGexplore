@@ -11,8 +11,10 @@ workflow PREPARE{
     mags_folder
   main:
   //Define chanel fasta files with MAGS from the skin
-    CHECKM_MARKER(mags_folder)
-    fnaname_markers=CHECKM_MARKER.out.marker
+    if (!params.no_bacterial_mag){
+      CHECKM_MARKER(mags_folder)
+      fnaname_markers=CHECKM_MARKER.out.marker
+    }
     FASHEAD2BED(fnaname_markers)
     marker=FASHEAD2BED.out.markerbed
 
