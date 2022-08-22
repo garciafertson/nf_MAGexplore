@@ -93,7 +93,7 @@ workflow RUN_ABUNDANCE{
 
 }
 
-workflow RUN_ABUNDANCE{
+workflow RUN_ABUNDANCE_MAG{
   take:
     bowtie_index
     genesbed
